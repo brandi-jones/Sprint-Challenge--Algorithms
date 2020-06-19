@@ -96,29 +96,27 @@ class SortingRobot:
         """
         Sort the robot's list.
         """
-        #using robot's light as whether or not list is completely sorted
-        #utilizing bubble sort
-
-        # Fill this out
-        self.swap_item()
-        while self.light_is_on() == False:
-
-            self.set_light_on() #set light on before loop
-            while self.can_move_right(): #while not yet at the end of the list
-                self.move_right()
-                if self.compare_item() == -1:
-                    self.swap_item()
-                    self.set_light_off() #swap occurred, so we can't be sure the list is fully sorted until we iterate back again and check
-                
-
-            while self.can_move_left():
-                if self.compare_item() == 1:
-                    self.swap_item()
-                    self.set_light_off() #swap occurred, so we can't be sure the list is fully sorted until we iterate back again 
-                elif self.compare_item() == 0:
-                    self.swap_item()
-                self.move_left()
+        #sorts the list by going through the list and each pass grabs the smallest not yet sorted item, and places it where it needs to be. 
+        #Uses "None" to separate the list where items on the left of None are sorted, and those on the right are not yet        
         
+        while self.light_is_on() == False:
+            self.swap_item() #swap item at beginning of each pass through
+
+            while self.can_move_right(): #go as far right as you can while comparing items, to find the smallest not yet sorted
+                self.move_right()
+                if self.compare_item() == 1: #if item you're holding is greater than the item in front of you, swap
+                    self.swap_item()
+
+            while self.can_move_left() and self.compare_item() is not None: #go left as far as you can, as long as the item in front of you isn't None
+                self.move_left()
+            self.swap_item() #swap when item in front of you is None
+
+            if self.can_move_right(): #move forward if not yet at the end of the list, in this case the item currently infront of you (before moving right) is already sorted, so we need to move right
+                self.move_right()
+            else: #if at the end of the list (cannot go further right), list must be sorted
+                self.set_light_on()
+
+
         return 
 
 
