@@ -10,7 +10,7 @@ def count_th(word):
     if len(word) < 2:
         return 0 
 
-    #if string contains "th", increase the count variable
+    #if string contains "th" in the first 2 positions, increase the count variable
     if word[0] == 't' and word[1] == 'h':
         count+=1
 
